@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    private Button login_to_register_Btn;
+    private Button login_to_register_Btn, login_to_account_detail_Btn;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -75,6 +75,18 @@ public class LoginFragment extends Fragment {
 
                 fragmentTransaction.replace(R.id.contentContainer, new RegisterFragment(), null);
                 fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        login_to_account_detail_Btn = view.findViewById(R.id.login_to_account_detail_Btn);
+        login_to_account_detail_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.contentContainer, new AccountDetailFragment(), null);
                 fragmentTransaction.commit();
             }
         });

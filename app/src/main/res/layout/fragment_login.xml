@@ -40,6 +40,7 @@
         android:paddingEnd="12dp"/>
 
     <Button
+        android:id="@+id/login_to_account_detail_Btn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
