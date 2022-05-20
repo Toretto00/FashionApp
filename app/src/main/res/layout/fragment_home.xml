@@ -8,9 +8,7 @@
     tools:context=".HomeFragment"
     android:id="@+id/homeFragmentBtn">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"/>
+
 
     <ScrollView
         android:layout_width="match_parent"
