@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        //myToolbar = (Toolbar) getActivity().findViewById(R.id.myToolbar);
+
         //setSupportActionBar(myToolbar);
 
         return inflater.inflate(R.layout.fragment_home, container, false);
@@ -87,6 +87,10 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        myToolbar = (Toolbar) view.findViewById(R.id.myToolbar);
+        myToolbar.inflateMenu(R.menu.menu_bar);
+        myToolbar.setTitle(null);
 
         viewPager = view.findViewById(R.id.viewPageSlider);
         tabLayout = view.findViewById(R.id.tabLayoutSlider);
