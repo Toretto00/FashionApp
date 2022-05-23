@@ -1,5 +1,6 @@
 package com.example.fashionapp;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
@@ -7,11 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Properties;
 
@@ -79,8 +83,10 @@ public class RegisterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
-    private EditText emailRegister, passwordRegister, confirmPasswordRegister;
-    private Button registerBtn;
+    private EditText emailRegister, passwordRegister, confirmPasswordRegister, codeEditText;
+    private TextView resendCodeBtn, wrongCodeTextView;
+    private Button registerBtn = null, cancelBtn = null, verifyBtn = null;
+    int code = 0;
     final String username = "phanchibap0007@gmail.com";
     final String password = "Pcb0941819910";
 
@@ -96,46 +102,9 @@ public class RegisterFragment extends Fragment {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (emailRegister.getText().toString().compareTo("") != 0 )
-                {
-
-
-                    Properties properties = new Properties();
-//                    properties.put("mail.smtp.auth", "true");
-//                    properties.put("mail.smtp.starttls.enable", "true");
-//                    properties.put("mail.smtp.host", "smtp.gmail.com");
-//                    properties.put("mail.smtp.port", "587");
-                    properties.put("mail.smtp.host", "smtp.gmail.com");
-                    properties.put("mail.smtp.socketFactory.port", "465");
-                    properties.put("mail.smtp.socketFactory.class",
-                            "javax.net.ssl.SSLSocketFactory");
-                    properties.put("mail.smtp.auth", "true");
-                    properties.put("mail.smtp.port", "465");
-
-                    Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
-                        @Override
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(username, password);
-                        }
-                    });
-                    try {
-                        MimeMessage message = new MimeMessage(session);
-                        message.setFrom(new InternetAddress(username));
-                        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailRegister.getText().toString().trim()));
-                        message.setSubject("You've got your verification code");
-                        message.setText("Your Verification Code is [code]\n" +
-                                "This Verification Code will be expired in 30 minutes.\n" +
-                                "\n" +
-                                "Thanks!\n" +
-                                "The EAKTION Team\n" +
-                                "\n" +
-                                "*This e-mail was sent from a notification-only address that cannot accept incoming e-mails. Please do not reply to this message");
-                        Transport.send(message);
-                        Toast.makeText(getContext(), "Email send successfully!", Toast.LENGTH_LONG).show();
-                    }catch (MessagingException e)
-                    {
-                        throw new RuntimeException(e);
-                    }
+                if (emailRegister.getText().toString().compareTo("") != 0) {
+                    showVerificationcodeDialog();
+                    sendVerificationCode();
                 }
                 else
                 {
@@ -145,5 +114,89 @@ public class RegisterFragment extends Fragment {
         });
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
+
+    public void sendVerificationCode(){
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.socketFactory.port", "465");
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.port", "465");
+
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        try {
+            code = (int) Math.floor(((Math.random() * 899999) + 100000));
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailRegister.getText().toString().trim()));
+            message.setSubject("You've got your verification code");
+            message.setText("Your Verification Code is " + "[" + code +"]\n" +
+                    "This Verification Code will be expired in 30 minutes.\n" +
+                    "\n" +
+                    "Thanks!\n" +
+                    "The EAKTION Team\n" +
+                    "\n" +
+                    "*This e-mail was sent from a notification-only address that cannot accept incoming e-mails. Please do not reply to this message");
+            Transport.send(message);
+            Toast.makeText(getContext(), "Email send successfully!", Toast.LENGTH_LONG).show();
+        }
+        catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showVerificationcodeDialog(){
+        Dialog verifyDialog = new Dialog(RegisterFragment.this.getContext());
+        verifyDialog.setContentView(R.layout.verify_dialog);
+        verifyDialog.show();
+
+
+        resendCodeBtn = verifyDialog.findViewById(R.id.resendCodeBtn);
+        cancelBtn = verifyDialog.findViewById(R.id.cancelBtn);
+        verifyBtn = verifyDialog.findViewById(R.id.verifyBtn);
+        wrongCodeTextView = verifyDialog.findViewById(R.id.wrongCodeTextView);
+        codeEditText = verifyDialog.findViewById(R.id.codeEditText);
+
+        resendCodeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendVerificationCode();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verifyDialog.dismiss();
+            }
+        });
+
+        verifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(codeEditText.getText().toString().trim().compareTo(String.valueOf(code))==0)
+                {
+                    verifyDialog.dismiss();
+
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentTransaction.replace(R.id.contentContainer, new LoginFragment(), null);
+                    fragmentTransaction.commit();
+
+                    Toast.makeText(getContext(), "Register account successfully!", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    wrongCodeTextView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 }
