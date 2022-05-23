@@ -1,17 +1,29 @@
 package com.example.fashionapp;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,6 +81,8 @@ public class RegisterFragment extends Fragment {
 
     private EditText emailRegister, passwordRegister, confirmPasswordRegister;
     private Button registerBtn;
+    final String username = "phanchibap0007@gmail.com";
+    final String password = "Pcb0941819910";
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -82,26 +96,54 @@ public class RegisterFragment extends Fragment {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String username = "phanchibap0007@gmail.com";
-                final String password = "Pcb0941819910";
+                if (emailRegister.getText().toString().compareTo("") != 0 )
+                {
 
-//                String messageToSend =
-                Properties properties = new Properties();
-                properties.put("mail.smtp.auth", "true");
-                properties.put("mail.smtp.starttls.enable", "true");
-                properties.put("mail.smtp.host", "smtp.gmail.com");
-                properties.put("mail.smtp.port", "587");
-//                Session session = Session.getInstance(properties, new javax.mail.Authenticator(){
-//                    PasswordAuthentication getPasswordAuthentication() {
-//                        return new PasswordAuthentication(username, password);
-//                    }
-//                });
-//                try {
-//                    Message message = new MimeMessage(session);
-//                    message.setFrom(new InternetAddress(username));
-//                }
-//                catch ()
+
+                    Properties properties = new Properties();
+//                    properties.put("mail.smtp.auth", "true");
+//                    properties.put("mail.smtp.starttls.enable", "true");
+//                    properties.put("mail.smtp.host", "smtp.gmail.com");
+//                    properties.put("mail.smtp.port", "587");
+                    properties.put("mail.smtp.host", "smtp.gmail.com");
+                    properties.put("mail.smtp.socketFactory.port", "465");
+                    properties.put("mail.smtp.socketFactory.class",
+                            "javax.net.ssl.SSLSocketFactory");
+                    properties.put("mail.smtp.auth", "true");
+                    properties.put("mail.smtp.port", "465");
+
+                    Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+                        @Override
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
+                    try {
+                        MimeMessage message = new MimeMessage(session);
+                        message.setFrom(new InternetAddress(username));
+                        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailRegister.getText().toString().trim()));
+                        message.setSubject("You've got your verification code");
+                        message.setText("Your Verification Code is [code]\n" +
+                                "This Verification Code will be expired in 30 minutes.\n" +
+                                "\n" +
+                                "Thanks!\n" +
+                                "The EAKTION Team\n" +
+                                "\n" +
+                                "*This e-mail was sent from a notification-only address that cannot accept incoming e-mails. Please do not reply to this message");
+                        Transport.send(message);
+                        Toast.makeText(getContext(), "Email send successfully!", Toast.LENGTH_LONG).show();
+                    }catch (MessagingException e)
+                    {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Please fill all fields!", Toast.LENGTH_LONG).show();
+                }
             }
         });
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 }
