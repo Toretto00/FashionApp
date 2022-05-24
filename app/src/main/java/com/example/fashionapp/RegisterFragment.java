@@ -1,25 +1,16 @@
 package com.example.fashionapp;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import org.w3c.dom.Text;
-
-import java.util.Calendar;
 import java.util.Properties;
 
 /**
@@ -76,30 +67,12 @@ public class RegisterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
-    private EditText emailRegister, passwordRegister, confirmPasswordRegister, birthdayRegister;
+    private EditText emailRegister, passwordRegister, confirmPasswordRegister;
     private Button registerBtn;
-    private TextView login;
-    private  DatePickerDialog datePickerDialog;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        login = (TextView) view.findViewById(R.id.login);
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                fragmentTransaction.replace(R.id.contentContainer, new LoginFragment(), null);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-
-        birthdayRegister = (EditText) view.findViewById(R.id.birthdayRegister);
 
         emailRegister = view.findViewById(R.id.emailRegister);
         passwordRegister = view.findViewById(R.id.passwordRegister);
@@ -130,38 +103,5 @@ public class RegisterFragment extends Fragment {
 //                catch ()
             }
         });
-
-        initDatePicker1();
-    }
-
-    private void initDatePicker1() {
-        DatePickerDialog.OnDateSetListener dateSetListener1 = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                String date = makeDateString(day, month, year);
-                birthdayRegister.setText(date);
-            }
-        };
-
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        int style = AlertDialog.THEME_HOLO_LIGHT;
-
-        datePickerDialog = new DatePickerDialog(getContext(), style, dateSetListener1, year, month, day);
-
-        birthdayRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.show();
-            }
-        });
-    }
-
-    private String makeDateString(int day, int month, int year) {
-        return day + "/" + month + "/" + year;
     }
 }

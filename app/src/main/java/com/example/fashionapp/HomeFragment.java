@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,8 +25,6 @@ import me.relex.circleindicator.CircleIndicator3;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
-    Toolbar myToolbar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,10 +70,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
-        //setSupportActionBar(myToolbar);
-
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -87,10 +80,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        myToolbar = (Toolbar) view.findViewById(R.id.myToolbar);
-        myToolbar.inflateMenu(R.menu.menu_bar);
-        myToolbar.setTitle(null);
 
         viewPager = view.findViewById(R.id.viewPageSlider);
         tabLayout = view.findViewById(R.id.tabLayoutSlider);
