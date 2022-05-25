@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_search"
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always"/>
 
     <item android:id="@+id/shoppingCart"
         android:title="Cart"
-        android:icon="@drawable/shopping_bag"
+        android:icon="@drawable/ic_shopping_cart"
         app:showAsAction="always"/>
 
 </menu>

@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
-            android:src="@drawable/home" />
+            android:src="@drawable/icon_home" />
     </androidx.appcompat.widget.Toolbar>
 
     <GridView
