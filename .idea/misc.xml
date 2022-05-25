@@ -33,6 +33,25 @@
         <entry key="..\:/Code/SE114/FashionApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3625" />
         <entry key="..\:/Code/SE114/FashionApp/app/src/main/res/menu/shopping_toolbar_menu.xml" value="0.2975630611372381" />
         <entry key="..\:/FashionApp-719e96cabcefe0822db3ea3dcd9b0cab0c75bea3/app/src/main/res/layout/activity_cart.xml" value="0.3625" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/drawable/custom_edittext.xml" value="0.2645" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/drawable/custom_email_icon.xml" value="0.2645" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/drawable/ic_cart_shopping_background.xml" value="0.2645" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/drawable/tablayout_dot.xml" value="0.2645" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/drawable/turquoise_round_button.xml" value="0.2645" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/activity_cart.xml" value="0.2971014492753623" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/activity_intro.xml" value="0.2971014492753623" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/activity_main.xml" value="0.2988679352838745" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/activity_show_detail.xml" value="0.2971014492753623" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/fragment_home.xml" value="0.2971014492753623" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/fragment_login.xml" value="0.2971014492753623" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/fragment_menu.xml" value="0.2971014492753623" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/fragment_register.xml" value="0.2971014492753623" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/layout/fragment_shopping.xml" value="0.2971014492753623" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3098958333333333" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/menu/menu_bar.xml" value="0.3098958333333333" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/menu/shopping_toolbar_menu.xml" value="0.3098958333333333" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/mipmap-anydpi-v26/ic_cart_shopping.xml" value="0.2645" />
+        <entry key="..\:/UIT/Study/Semester4/NhapMonUngDungDiDong/Doan/FashionApp/app/src/main/res/mipmap-anydpi-v26/ic_cart_shopping_round.xml" value="0.1595" />
       </map>
     </option>
   </component>

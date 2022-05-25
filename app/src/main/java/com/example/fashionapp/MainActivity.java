@@ -2,18 +2,23 @@ package com.example.fashionapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
+
+    Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,4 +58,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
