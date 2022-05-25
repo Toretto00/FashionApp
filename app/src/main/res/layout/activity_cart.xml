@@ -12,13 +12,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="5dp">
+
         <ImageButton
             android:id="@+id/cart_back_to_maim_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/left_arrow"
+            android:layout_margin="5dp"
             android:background="@color/white"
-            android:layout_margin="5dp"/>
+            android:src="@drawable/icon_back"
+            android:scaleY="1.5"
+            android:scaleX="1.5"
+            android:layout_gravity="center"/>
         <TextView
             android:layout_width="320dp"
             android:layout_height="wrap_content"

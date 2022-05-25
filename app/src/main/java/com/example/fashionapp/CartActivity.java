@@ -29,7 +29,7 @@ public class CartActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CartActivity.this, MainActivity.class));
+                finish();
             }
         });
 

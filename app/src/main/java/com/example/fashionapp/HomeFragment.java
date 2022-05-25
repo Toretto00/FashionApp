@@ -1,5 +1,6 @@
 package com.example.fashionapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -91,6 +93,20 @@ public class HomeFragment extends Fragment {
         myToolbar = (Toolbar) view.findViewById(R.id.myToolbar);
         myToolbar.inflateMenu(R.menu.menu_bar);
         myToolbar.setTitle(null);
+        myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id)
+                {
+                    case R.id.cartShopping:
+                        startActivity(new Intent(getContext(), CartActivity.class));
+                        break;
+                }
+                return false;
+            }
+            });
 
         viewPager = view.findViewById(R.id.viewPageSlider);
         tabLayout = view.findViewById(R.id.tabLayoutSlider);
