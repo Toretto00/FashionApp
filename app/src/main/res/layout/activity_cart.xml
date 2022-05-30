@@ -31,6 +31,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="530dp">
         <TextView
@@ -40,6 +41,13 @@
             android:text="Cart is Empty"
             android:textAlignment="center"
             android:visibility="visible"
+            tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/quantityCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:visibility="invisible"
             tools:ignore="MissingConstraints" />
         <GridView
             android:id="@+id/cart_list"
@@ -70,6 +78,7 @@
                 android:text="Tổng:"/>
 
             <TextView
+                android:id="@+id/totalPriceCart"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -94,6 +103,7 @@
                 android:text="ưu đãi:"/>
 
             <TextView
+                android:id="@+id/promotionPriceCart"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -116,6 +126,7 @@
                 android:text="Phí ship:"/>
 
             <TextView
+                android:id="@+id/shipPriceCart"
                 android:layout_width="339dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -140,6 +151,7 @@
                 android:text="Thành tiền:"/>
 
             <TextView
+                android:id="@+id/intoPriceCart"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -151,6 +163,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/paymentCart"
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"

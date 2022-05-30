@@ -2,73 +2,32 @@ package com.example.fashionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ShoppingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ShoppingFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ShoppingFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ShoppingFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ShoppingFragment newInstance(String param1, String param2) {
-        ShoppingFragment fragment = new ShoppingFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,17 +35,161 @@ public class ShoppingFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_shopping, container, false);
     }
 
+    DatabaseReference mData;
+
     private GridView gridView;
-    private ArrayList<product> productArrayList = new ArrayList<product>();
+    private ArrayList<clothes> ArrayAoThun = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayAoLen = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayAoSoMi = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayAoBlousonHoddie = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayAoJacket = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayQuanJeans = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayQuanShort = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayQuanTay = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayAo = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayQuan = new ArrayList<clothes>();
+    private ArrayList<clothes> ArrayAll = new ArrayList<clothes>();
     private custom_gridview_adapter customGridviewAdapter;
     private Toolbar myToolbar;
+    TextView textView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mData = FirebaseDatabase.getInstance().getReference();
+
         myToolbar = view.findViewById(R.id.shoppingToolbar);
-        gridView = view.findViewById(R.id.gridView);
+        gridView = getView().findViewById(R.id.gridView);
+
+
+        mData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    clothes sp = dataSnapshot.getValue(clothes.class);
+                    ArrayAll.add(sp);
+
+                    if(sp.getType().equals("Áo thun")){
+                        ArrayAoThun.add(sp);
+                    }
+                    else if(sp.getType().equals("Áo len")){
+                        ArrayAoLen.add(sp);
+                    }
+                    else if(sp.getType().equals("Áo sơ mi")){
+                        ArrayAoSoMi.add(sp);
+                    }
+                    else if(sp.getType().equals("Áo Blouson & Hoddie")){
+                        ArrayAoBlousonHoddie.add(sp);
+                    }
+                    else if(sp.getType().equals("Áo Khoác (Jacket)")){
+                        ArrayAoJacket.add(sp);
+                    }
+                    else if(sp.getType().equals("Quần Jeans")){
+                        ArrayQuanJeans.add(sp);
+                    }
+                    else if(sp.getType().equals("Quần Short")){
+                        ArrayQuanShort.add(sp);
+                    }
+                    else if(sp.getType().equals("Quần Tây")){
+                        ArrayQuanTay.add(sp);
+                    }
+                }
+                ArrayAo.addAll(ArrayAoThun);
+                ArrayAo.addAll(ArrayAoLen);
+                ArrayAo.addAll(ArrayAoSoMi);
+                ArrayAo.addAll(ArrayAoBlousonHoddie);
+                ArrayAo.addAll(ArrayAoJacket);
+                ArrayQuan.addAll(ArrayQuanJeans);
+                ArrayQuan.addAll(ArrayQuanShort);
+                ArrayQuan.addAll(ArrayQuanTay);
+                customGridviewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayAll);
+        gridView.setAdapter(customGridviewAdapter);
+        customGridviewAdapter.notifyDataSetChanged();
+
+        getParentFragmentManager().setFragmentResultListener("NHOMLOAI", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                String data1 = result.getString("nhomloai");
+
+                if(data1.equals("Áo")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayAo);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+                else if(data1.equals("Quần")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayQuan);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        getParentFragmentManager().setFragmentResultListener("LOAI", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                String data1 = result.getString("loai");
+
+                if(data1.equals("Áo thun")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayAoThun);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+                else if(data1.equals("Áo len")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayAoLen);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+                else if(data1.equals("Áo sơ mi")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayAoSoMi);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+                else if(data1.equals("Áo Blouson & Hoddie")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayAoBlousonHoddie);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+                else if(data1.equals("Áo Khoác (Jacket)")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayAoJacket);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+                else if(data1.equals("Quần Jeans")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayQuanJeans);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+                else if(data1.equals("Quần Short")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayQuanShort);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+                else if(data1.equals("Quần tây")){
+                    customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayQuanTay);
+                    gridView.setAdapter(customGridviewAdapter);
+                    customGridviewAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        if(customGridviewAdapter == null)
+        {
+            customGridviewAdapter = new custom_gridview_adapter( getContext(), R.layout.item_custom_grid_view, ArrayAoThun);
+            gridView.setAdapter(customGridviewAdapter);
+            customGridviewAdapter.notifyDataSetChanged();
+        }
+
 
         myToolbar.inflateMenu(R.menu.shopping_toolbar_menu);
         myToolbar.setTitle(null);
@@ -105,19 +208,19 @@ public class ShoppingFragment extends Fragment {
             }
         });
 
-        productArrayList.add(new product("Product 1", "100.000"+"đ", R.drawable.home));
-        productArrayList.add(new product("Product 2", "200.000"+"đ", R.drawable.cheque));
-        productArrayList.add(new product("Product 3", "300.000"+"đ", R.drawable.shopping_bag));
-        productArrayList.add(new product("Product 4", "400.000"+"đ", R.drawable.buying));
-        productArrayList.add(new product("Product 5", "500.000"+"đ", R.drawable.user));
-
-        customGridviewAdapter = new custom_gridview_adapter(R.layout.item_custom_grid_view, getContext(), productArrayList);
-        gridView.setAdapter(customGridviewAdapter);
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(getContext(), ShowDetailActivity.class));
+                clothes sp = (clothes) gridView.getItemAtPosition(i);
+                Intent intent = new Intent(getActivity(),ShowDetailActivity.class);
+                intent.putExtra("name", sp.getName());
+                intent.putExtra("link", sp.getLinkImage());
+                intent.putExtra("price", sp.getPrice());
+                intent.putExtra("describe", sp.getDescribe());
+
+                startActivity(intent);
+
+//                startActivity(new Intent(getContext(), ShowDetailActivity.class));
             }
         });
 
@@ -139,5 +242,6 @@ public class ShoppingFragment extends Fragment {
                 return false;
             }
         });
+
     }
 }

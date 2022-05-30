@@ -9,18 +9,26 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
-public class custom_gridview_adapter extends BaseAdapter {
+public class custom_gridview_adapter extends BaseAdapter{
 
-    private int layout;
     private Context context;
-    private ArrayList<product> productArrayList = new ArrayList<>();
+    private int layout;
+    private ArrayList<clothes> productArrayList = new ArrayList<clothes>();
     ValueFilter valueFilter;
-    ArrayList<product> list;
+    ArrayList<clothes> list;
 
-    public custom_gridview_adapter(int layout, Context context, ArrayList<product> productArrayList) {
+    public custom_gridview_adapter(Context context, int layout, ArrayList<clothes> productArrayList) {
         this.layout = layout;
         this.context = context;
         this.productArrayList = productArrayList;
@@ -33,48 +41,54 @@ public class custom_gridview_adapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public Object getItem(int position) {
+        return productArrayList.get(position);
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public long getItemId(int position) {
+        return position;
     }
 
     private class ViewHolder{
-        ImageView image;
+        TextView productName, productPrice;
+        ImageView productImage;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder viewHolder;
 
-        if(view == null)
+        if(convertView == null)
         {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(layout, null);
-            viewHolder.image = view.findViewById(R.id.productImage);
-            view.setTag(viewHolder);
+            convertView = inflater.inflate(layout, null);
+            viewHolder.productName = convertView.findViewById(R.id.productName);
+            viewHolder.productPrice = convertView.findViewById(R.id.productPrice);
+            viewHolder.productImage = convertView.findViewById(R.id.productImage);
+            convertView.setTag(viewHolder);
         }
-        else
-        {
-            viewHolder = (ViewHolder) view.getTag();
+        else{
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        product product = productArrayList.get(i);
+        clothes product = productArrayList.get(position);
 
-        viewHolder.image.setImageResource(product.getImage());
-
-        TextView name = view.findViewById(R.id.productName);
+        TextView name = convertView.findViewById(R.id.productName);
         name.setText(product.getName());
 
-        TextView price = view.findViewById(R.id.productPrice);
-        price.setText(product.getPrice());
+        TextView price = convertView.findViewById(R.id.productPrice);
+        NumberFormat formatter = new DecimalFormat("#,###");
+        String formattedNumber = formatter.format(Integer.valueOf(product.getPrice()));
+        price.setText(formattedNumber + " VNĐ");
+//        TextView price = convertView.findViewById(R.id.productPrice);
+//        price.setText(product.getPrice());
 
-        return view;
+        Picasso.get().load(product.getLinkImage()).into(viewHolder.productImage);
+
+        return convertView;
     }
 
     public Filter getFilter()
@@ -95,13 +109,13 @@ public class custom_gridview_adapter extends BaseAdapter {
 
             if (constraint != null && constraint.length() > 0)
             {
-                ArrayList<product> filterContacts = new ArrayList<product>();
+                ArrayList<clothes> filterContacts = new ArrayList<clothes>();
 
                 for (int i = 0; i < list.size(); i++)
                 {
                     if((list.get(i).getName().toUpperCase()).contains(constraint.toString().toUpperCase()))
                     {
-                        product contacts = new product(list.get(i));
+                        clothes contacts = new clothes(list.get(i));
                         filterContacts.add(contacts);
                     }
                 }
@@ -118,7 +132,7 @@ public class custom_gridview_adapter extends BaseAdapter {
         @Override
         protected void publishResults(CharSequence constraint,
                                       FilterResults results) {
-            productArrayList = (ArrayList<product>) results.values;
+            productArrayList = (ArrayList<clothes>) results.values;
             notifyDataSetChanged();
         }
     }
