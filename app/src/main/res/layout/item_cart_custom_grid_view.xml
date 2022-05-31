@@ -8,10 +8,11 @@
         android:id="@+id/productImageCart"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_margin="5dp"
         android:src="@drawable/shopping_bag" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical">
@@ -22,41 +23,63 @@
             android:layout_margin="5dp"
             android:text="Tên sản phẩm"
             android:textSize="18dp"
-            android:textColor="@color/black"/>
-        <TextView
-            android:id="@+id/productColorCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Màu"
-            android:textSize="16dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Màu:"
+                android:layout_margin="5dp"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/productColorCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Màu"
+                android:textSize="16dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="left">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Size:"
+                android:layout_marginEnd="5dp"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/productSizeCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Size"
                 android:textSize="16dp"
-                android:layout_marginEnd="60dp"
-                android:textColor="@color/black" />
+                android:layout_marginEnd="24dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Số lượng: "
                 android:textSize="16dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/productQuantityCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quantity"
-                android:textSize="16dp"
-                android:textColor="@color/black" />
+                android:textSize="16dp"/>
         </LinearLayout>
         <TextView
             android:id="@+id/productPriceCart"
