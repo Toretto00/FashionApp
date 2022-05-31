@@ -55,5 +55,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Add those line in dependencies
+    implementation files('libs/activation.jar')
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/mail.jar')
 }
 

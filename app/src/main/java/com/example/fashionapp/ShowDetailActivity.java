@@ -1,25 +1,20 @@
 package com.example.fashionapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,6 +90,12 @@ public class ShowDetailActivity extends AppCompatActivity {
                 if(productInsertSize.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Bạn chưa nhập số lượng mua. Vui lòng nhập!", Toast.LENGTH_SHORT).show();
                 }
+                else if(productSizeS.isChecked() == false && productSizeM.isChecked() == false && productSizeL.isChecked() == false && productSizeXL.isChecked() == false){
+                    Toast.makeText(getApplicationContext(), "Vui lòng chọn size cho sản phẩm.", Toast.LENGTH_SHORT).show();
+                }
+                else if(Integer.parseInt(productInsertSize.getText().toString().trim()) > Integer.parseInt(productQuantityDetail.getText().toString().trim())){
+                    Toast.makeText(getApplicationContext(), "Số lượng sản phẩm không đủ!", Toast.LENGTH_SHORT).show();
+                }
                 else{
                     addProductToCart();
 //                    byExtras();
@@ -158,28 +159,28 @@ public class ShowDetailActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 productQuantityDetail.setText(String.valueOf(colorproduct.getSizeS()));
-                                size = "Size S";
+                                size = "S";
                             }
                         });
                         productSizeM.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 productQuantityDetail.setText(String.valueOf(colorproduct.getSizeM()));
-                                size = "Size M";
+                                size = "M";
                             }
                         });
                         productSizeL.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 productQuantityDetail.setText(String.valueOf(colorproduct.getSizeL()));
-                                size = "Size L";
+                                size = "L";
                             }
                         });
                         productSizeXL.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 productQuantityDetail.setText(String.valueOf(colorproduct.getSizeXL()));
-                                size = "Size XL";
+                                size = "XL";
                             }
                         });
                     }
