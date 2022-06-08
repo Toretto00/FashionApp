@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,11 @@ public class HomeFragment extends Fragment {
         myToolbar = (Toolbar) view.findViewById(R.id.myToolbar);
         myToolbar.inflateMenu(R.menu.menu_bar);
         myToolbar.setTitle(null);
+
+        Menu menu = myToolbar.getMenu();
+        MenuItem cart = menu.findItem(R.id.cartShopping);
+
+
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

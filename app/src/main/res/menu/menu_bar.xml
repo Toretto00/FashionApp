@@ -16,7 +16,7 @@
         app:showAsAction="always"
         android:title="Cart Shopping"
         android:icon="@drawable/ic_shopping_cart"
-
+        app:actionLayout="@layout/cart_action_item"
         >
     </item>
 
