@@ -100,9 +100,9 @@ public class Database extends SQLiteOpenHelper {
 
         long result = db.update(TABLE_NAME, cv, "product_id=?", new String[]{row_id});
         if(result == -1){
-            Toast.makeText(context, "Lỗi!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Update complete!", Toast.LENGTH_SHORT).show();
         }
         db.close();
     }
@@ -111,9 +111,9 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(TABLE_NAME, "product_id=?", new String[]{row_id});
         if(result == -1){
-            Toast.makeText(context, "Lỗi!", Toast.LENGTH_SHORT);
+            Toast.makeText(context, "Error!", Toast.LENGTH_SHORT);
         }else{
-            Toast.makeText(context, "Xóa thành công!", Toast.LENGTH_SHORT);
+            Toast.makeText(context, "Update complete!", Toast.LENGTH_SHORT);
         }
         db.close();
     }

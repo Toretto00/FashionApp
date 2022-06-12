@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -50,8 +52,7 @@ public class ShoppingFragment extends Fragment {
     private ArrayList<clothes> ArrayQuan = new ArrayList<clothes>();
     private ArrayList<clothes> ArrayAll = new ArrayList<clothes>();
     private custom_gridview_adapter customGridviewAdapter;
-    private Toolbar myToolbar;
-    TextView textView;
+    Toolbar myToolbar;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -61,7 +62,6 @@ public class ShoppingFragment extends Fragment {
 
         myToolbar = view.findViewById(R.id.shoppingToolbar);
         gridView = getView().findViewById(R.id.gridView);
-
 
         mData.addValueEventListener(new ValueEventListener() {
             @Override
@@ -191,7 +191,7 @@ public class ShoppingFragment extends Fragment {
         }
 
 
-        myToolbar.inflateMenu(R.menu.shopping_toolbar_menu);
+        myToolbar.inflateMenu(R.menu.menu_bar_main);
         myToolbar.setTitle(null);
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -200,10 +200,11 @@ public class ShoppingFragment extends Fragment {
 
                 switch (id)
                 {
-                    case R.id.shoppingCart:
+                    case R.id.cartShopping:
                         startActivity(new Intent(getContext(), CartActivity.class));
                         break;
                 }
+
                 return false;
             }
         });
@@ -225,7 +226,7 @@ public class ShoppingFragment extends Fragment {
         });
 
         Menu menu = myToolbar.getMenu();
-        MenuItem search = menu.findItem(R.id.search);
+        MenuItem search = menu.findItem(R.id.actionSearch);
         SearchView searchView = (SearchView) search.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -239,6 +240,16 @@ public class ShoppingFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 ShoppingFragment.this.customGridviewAdapter.getFilter().filter(newText);
                 gridView.setAdapter(customGridviewAdapter);
+                return false;
+            }
+        });
+
+        MenuItem cart = menu.findItem(R.id.cartShopping);
+        cart.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(getActivity(), CartActivity.class);
+                startActivity(intent);
                 return false;
             }
         });
