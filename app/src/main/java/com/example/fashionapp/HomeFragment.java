@@ -1,13 +1,16 @@
 package com.example.fashionapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,6 +23,8 @@ import me.relex.circleindicator.CircleIndicator;
 import me.relex.circleindicator.CircleIndicator3;
 
 public class HomeFragment extends Fragment {
+
+    Toolbar myToolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +43,24 @@ public class HomeFragment extends Fragment {
 
         viewPager = view.findViewById(R.id.viewPageSlider);
         tabLayout = view.findViewById(R.id.tabLayoutSlider);
+
+        myToolbar = (Toolbar) getActivity().findViewById(R.id.myToolbarHome);
+        myToolbar.inflateMenu(R.menu.menu_bar_main);
+        myToolbar.setTitle(null);
+        myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id)
+                {
+                    case R.id.cartShopping:
+                        startActivity(new Intent(getContext(), CartActivity.class));
+                        break;
+                }
+                return false;
+            }
+        });
 
         sliderImageItemArrayList = new ArrayList<>();
         sliderImageItemArrayList.add(new sliderImageItem(R.drawable.slider1));

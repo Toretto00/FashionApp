@@ -1,12 +1,14 @@
 package com.example.fashionapp;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,17 +19,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.fashionapp.models.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
+
+import java.util.Calendar;
 import java.util.Properties;
-
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Transport;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +37,9 @@ import javax.mail.internet.MimeMessage;
  * create an instance of this fragment.
  */
 public class RegisterFragment extends Fragment {
+
+    FirebaseAuth auth;
+    FirebaseDatabase database;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,120 +88,159 @@ public class RegisterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
-    private EditText emailRegister, passwordRegister, confirmPasswordRegister, codeEditText;
-    private TextView resendCodeBtn, wrongCodeTextView;
-    private Button registerBtn = null, cancelBtn = null, verifyBtn = null;
-    int code = 0;
-    final String username = "phanchibap0007@gmail.com";
-    final String password = "Pcb0941819910";
+    private EditText emailRegister, passwordRegister, confirmPasswordRegister, nameRegister,
+            phoneRegister, genderRegister, addressRegister;
+    private Button registerBtn;
+    private TextView login, birthdayRegister;
+    private  DatePickerDialog datePickerDialog;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+        login = (TextView) view.findViewById(R.id.login);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.contentContainer, new LoginFragment(), null);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        birthdayRegister = (TextView) view.findViewById(R.id.birthdayRegister);
+
         emailRegister = view.findViewById(R.id.emailRegister);
         passwordRegister = view.findViewById(R.id.passwordRegister);
         confirmPasswordRegister = view.findViewById(R.id.confirmPasswordRegister);
+        nameRegister = view.findViewById(R.id.nameRegister);
+        phoneRegister = view.findViewById(R.id.phoneRegister);
+        genderRegister = view.findViewById(R.id.genderRegister);
+        addressRegister = view.findViewById(R.id.addressRegister);
+
 
         registerBtn = view.findViewById(R.id.registerBtn);
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (emailRegister.getText().toString().compareTo("") != 0) {
-                    showVerificationcodeDialog();
-                    sendVerificationCode();
-                }
-                else
-                {
-                    Toast.makeText(getContext(), "Please fill all fields!", Toast.LENGTH_LONG).show();
-                }
+
+                createUser();
+
+
+//                final String username = "phanchibap0007@gmail.com";
+//                final String password = "Pcb0941819910";
+//
+////                String messageToSend =
+//                Properties properties = new Properties();
+//                properties.put("mail.smtp.auth", "true");
+//                properties.put("mail.smtp.starttls.enable", "true");
+//                properties.put("mail.smtp.host", "smtp.gmail.com");
+//                properties.put("mail.smtp.port", "587");
+//                Session session = Session.getInstance(properties, new javax.mail.Authenticator(){
+//                    PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication(username, password);
+//                    }
+//                });
+//                try {
+//                    Message message = new MimeMessage(session);
+//                    message.setFrom(new InternetAddress(username));
+//                }
+//                catch ()
             }
         });
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+
+        initDatePicker1();
     }
 
-    public void sendVerificationCode(){
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.socketFactory.port", "465");
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.port", "465");
+    private void createUser() {
+        String name = nameRegister.getText().toString();
+        String email = emailRegister.getText().toString();
+        String password = passwordRegister.getText().toString();
+        String confirmPassword = confirmPasswordRegister.getText().toString();
+        String birthday = birthdayRegister.getText().toString();
+        String gender = genderRegister.getText().toString();
+        String address = addressRegister.getText().toString();
+        String phone = phoneRegister.getText().toString();
 
-        Session session = Session.getDefaultInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
-        try {
-            code = (int) Math.floor(((Math.random() * 899999) + 100000));
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailRegister.getText().toString().trim()));
-            message.setSubject("You've got your verification code");
-            message.setText("Your Verification Code is " + "[" + code +"]\n" +
-                    "This Verification Code will be expired in 30 minutes.\n" +
-                    "\n" +
-                    "Thanks!\n" +
-                    "The EAKTION Team\n" +
-                    "\n" +
-                    "*This e-mail was sent from a notification-only address that cannot accept incoming e-mails. Please do not reply to this message");
-            Transport.send(message);
-            Toast.makeText(getContext(), "Email send successfully!", Toast.LENGTH_LONG).show();
+        if(TextUtils.isEmpty(name) ||
+                TextUtils.isEmpty(phone) ||
+                TextUtils.isEmpty(email) ||
+                TextUtils.isEmpty(password) ||
+                TextUtils.isEmpty(confirmPassword) ||
+                TextUtils.isEmpty(birthday) ||
+                TextUtils.isEmpty(gender) ||
+                TextUtils.isEmpty(address)){
+            Toast.makeText(getContext(), "Please fill all fields!", Toast.LENGTH_SHORT)
+                    .show();
+            return;
         }
-        catch (MessagingException e) {
-            throw new RuntimeException(e);
+
+        if(password.length() < 6){
+            Toast.makeText(getContext(), "Password length must be greater than 6 letter.",
+                    Toast.LENGTH_SHORT).show();
         }
+
+        if(passwordRegister.equals(password)){
+            Toast.makeText(getContext(), "Password and confirm password must be match.",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+
+                            UserModel userModel = new UserModel(name, phone, email, password,
+                                    gender, birthday, address);
+                            String id = task.getResult().getUser().getUid();
+                            database.getReference().child("User").child(id).setValue(userModel);
+
+                            Toast.makeText(getContext(), "Registration successful!",
+                                    Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getContext(), "Error: "+task.getException(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
-    public void showVerificationcodeDialog(){
-        Dialog verifyDialog = new Dialog(RegisterFragment.this.getContext());
-        verifyDialog.setContentView(R.layout.verify_dialog);
-        verifyDialog.show();
+    private void initDatePicker1() {
+        DatePickerDialog.OnDateSetListener dateSetListener1 = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = makeDateString(day, month, year);
+                birthdayRegister.setText(date);
+            }
+        };
 
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        resendCodeBtn = verifyDialog.findViewById(R.id.resendCodeBtn);
-        cancelBtn = verifyDialog.findViewById(R.id.cancelBtn);
-        verifyBtn = verifyDialog.findViewById(R.id.verifyBtn);
-        wrongCodeTextView = verifyDialog.findViewById(R.id.wrongCodeTextView);
-        codeEditText = verifyDialog.findViewById(R.id.codeEditText);
+        int style = AlertDialog.THEME_HOLO_LIGHT;
 
-        resendCodeBtn.setOnClickListener(new View.OnClickListener() {
+        datePickerDialog = new DatePickerDialog(getContext(), style, dateSetListener1, year, month, day);
+
+        birthdayRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendVerificationCode();
+                datePickerDialog.show();
             }
         });
+    }
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                verifyDialog.dismiss();
-            }
-        });
-
-        verifyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(codeEditText.getText().toString().trim().compareTo(String.valueOf(code))==0)
-                {
-                    verifyDialog.dismiss();
-
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                    fragmentTransaction.replace(R.id.contentContainer, new LoginFragment(), null);
-                    fragmentTransaction.commit();
-
-                    Toast.makeText(getContext(), "Register account successfully!", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    wrongCodeTextView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+    private String makeDateString(int day, int month, int year) {
+        return day + "/" + month + "/" + year;
     }
 }

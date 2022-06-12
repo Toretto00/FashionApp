@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/search"
-        android:icon="@android:drawable/ic_menu_search"
+    <item
+        android:id="@+id/actionSearchND"
         android:title="Search"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always"/>
+        />
 
-    <item android:id="@+id/shoppingCart"
-        android:title="Cart"
-        android:icon="@drawable/shopping_bag"
-        app:showAsAction="always"/>
+    <item
+        android:id="@+id/cartShoppingND"
+        app:showAsAction="always"
+        android:title="Cart Shopping"
+        android:icon="@drawable/ic_shopping_cart"
+        app:actionLayout="@layout/cart_action_item"
+        >
+    </item>
+
 
 </menu>
