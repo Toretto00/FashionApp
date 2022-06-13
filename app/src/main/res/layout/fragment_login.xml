@@ -100,7 +100,8 @@
             android:layout_height="40dp"
             android:layout_margin="20dp"
             android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/gmail" />
+            android:src="@drawable/google"
+            android:id="@+id/googleSign"/>
 
         <ImageButton
             android:layout_width="40dp"
