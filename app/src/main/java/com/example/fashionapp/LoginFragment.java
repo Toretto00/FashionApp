@@ -1,5 +1,6 @@
 package com.example.fashionapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,16 +18,28 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginFragment extends Fragment {
 
     FirebaseAuth auth;
     Button loginBtn;
     EditText emailLogin, passwordLogin;
+    FirebaseFirestore fireStore = FirebaseFirestore.getInstance();
+    ImageButton googleSign;
+    BeginSignInRequest signInRequest;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +99,7 @@ public class LoginFragment extends Fragment {
         emailLogin = (EditText) view.findViewById(R.id.emailLogin);
         passwordLogin = (EditText) view.findViewById(R.id.passwordLogin);
         register = (TextView) view.findViewById(R.id.register);
+        googleSign = (ImageButton) view.findViewById(R.id.googleSign);
 
         if(auth.getCurrentUser() != null){
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -94,6 +109,7 @@ public class LoginFragment extends Fragment {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override

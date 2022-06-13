@@ -21,14 +21,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fashionapp.models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -40,6 +45,7 @@ public class RegisterFragment extends Fragment {
 
     FirebaseAuth auth;
     FirebaseDatabase database;
+    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -201,7 +207,7 @@ public class RegisterFragment extends Fragment {
                             UserModel userModel = new UserModel(name, phone, email, password,
                                     gender, birthday, address);
                             String id = task.getResult().getUser().getUid();
-                            database.getReference().child("User").child(id).setValue(userModel);
+                            userInfo();
 
                             Toast.makeText(getContext(), "Registration successful!",
                                     Toast.LENGTH_SHORT).show();
@@ -209,6 +215,26 @@ public class RegisterFragment extends Fragment {
                             Toast.makeText(getContext(), "Error: "+task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+    }
+
+    private void userInfo() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", nameRegister.getText().toString());
+        map.put("phone", phoneRegister.getText().toString());
+        map.put("email", emailRegister.getText().toString());
+        map.put("password", passwordRegister.getText().toString());
+        map.put("gender", genderRegister.getText().toString());
+        map.put("birthday", birthdayRegister.getText().toString());
+        map.put("address", addressRegister.getText().toString());
+
+        fStore.collection("Users")
+                .add(map)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+
                     }
                 });
     }
