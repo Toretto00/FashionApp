@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class AccountDetailFragment extends Fragment {
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     TextView userName;
     Button signOutBtn;
+    LinearLayout profileBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +52,7 @@ public class AccountDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         userName = getView().findViewById(R.id.userName);
+        profileBtn = (LinearLayout) view.findViewById(R.id.profileBtn);
 
         if(user != null){
             fStore.collection("Users")
@@ -66,6 +69,19 @@ public class AccountDetailFragment extends Fragment {
                         }
                     });
         }
+
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.contentContainer, new ProfileFragment(), null);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
         signOutBtn = getView().findViewById(R.id.signOutBtn);
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
