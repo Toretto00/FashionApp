@@ -135,45 +135,51 @@
     </string-array>
 
     <string-array name="array_tpthuduc_ward">-->
-            <item>* Select ward</item>
-            <item>Phường An Khánh</item>
-            <item>Phường An Lợi Đông</item>
-            <item>Phường An Phú</item>
-            <item>Phường Bình Chiểu</item>
-            <item>Phường Bình Thọ</item>
-            <item>Phường Bình Trưng Đông</item>
-            <item>Phường Bình Trưng Tây</item>
-            <item>Phường Cát Lái</item>
-            <item>Phường Hiệp Bình Chánh</item>
-            <item>Phường Hiệp Bình Phước</item>
-            <item>Phường Hiệp Phú</item>
-            <item>Phường Linh Chiểu</item>
-            <item>Phường Linh Đông</item>
-            <item>Phường Linh Tây</item>
-            <item>Phường Linh Trung</item>
-            <item>Phường Linh Xuân</item>
-            <item>Phường Long Bình</item>
-            <item>Phường Long Phước</item>
-            <item>Phường Long Thạnh Mỹ</item>
-            <item>Phường Long Trường</item>
-            <item>Phường Phú Hữu</item>
-            <item>Phường Phước Bình</item>
-            <item>Phường Phước Long A</item>
-            <item>Phường Phước Long B</item>
-            <item>Phường Tam Bình</item>
-            <item>Phường Tam Phú</item>
-            <item>Phường Tân Phú</item>
-            <item>Phường Tăng Nhơn Phú A</item>
-            <item>Phường Tăng Nhơn Phú B</item>
-            <item>Phường Thạnh Mỹ Lợi</item>
-            <item>Phường Thảo Điền</item>
-            <item>Phường Thủ Thiêm</item>
-            <item>Phường Trường Thạnh</item>
-            <item>Phường Trường Thọ</item>
-        </string-array>
+        <item>* Select ward</item>
+        <item>Phường An Khánh</item>
+        <item>Phường An Lợi Đông</item>
+        <item>Phường An Phú</item>
+        <item>Phường Bình Chiểu</item>
+        <item>Phường Bình Thọ</item>
+        <item>Phường Bình Trưng Đông</item>
+        <item>Phường Bình Trưng Tây</item>
+        <item>Phường Cát Lái</item>
+        <item>Phường Hiệp Bình Chánh</item>
+        <item>Phường Hiệp Bình Phước</item>
+        <item>Phường Hiệp Phú</item>
+        <item>Phường Linh Chiểu</item>
+        <item>Phường Linh Đông</item>
+        <item>Phường Linh Tây</item>
+        <item>Phường Linh Trung</item>
+        <item>Phường Linh Xuân</item>
+        <item>Phường Long Bình</item>
+        <item>Phường Long Phước</item>
+        <item>Phường Long Thạnh Mỹ</item>
+        <item>Phường Long Trường</item>
+        <item>Phường Phú Hữu</item>
+        <item>Phường Phước Bình</item>
+        <item>Phường Phước Long A</item>
+        <item>Phường Phước Long B</item>
+        <item>Phường Tam Bình</item>
+        <item>Phường Tam Phú</item>
+        <item>Phường Tân Phú</item>
+        <item>Phường Tăng Nhơn Phú A</item>
+        <item>Phường Tăng Nhơn Phú B</item>
+        <item>Phường Thạnh Mỹ Lợi</item>
+        <item>Phường Thảo Điền</item>
+        <item>Phường Thủ Thiêm</item>
+        <item>Phường Trường Thạnh</item>
+        <item>Phường Trường Thọ</item>
+    </string-array>
 
-        <string-array name="array_default_ward">
-            <item>* Select ward</item>
-        </string-array>
+    <string-array name="array_default_ward">
+        <item>* Select ward</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Another</item>
+    </string-array>
 
 </resources>
