@@ -1,11 +1,14 @@
 package com.example.fashionapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,12 +36,14 @@ public class MenuFragment extends Fragment {
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
     private BottomNavigationView bottomNavigationView;
+    Toolbar menuToolbar;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        bottomNavigationView = view.findViewById(R.id.bottom_nav_view);
+        bottomNavigationView = getActivity().findViewById(R.id.bottom_nav_view);
+//        menuToolbar = view.findViewById(R.id.menuToolbar);
 
         expandableListView = view.findViewById(R.id.expandableListView);
         expandableListDetail = ExpandableListDataPump.getData();
@@ -53,6 +58,24 @@ public class MenuFragment extends Fragment {
 //            }
 //        });
 
+//        menuToolbar.inflateMenu(R.menu.menu_bar_main);
+//        menuToolbar.setTitle(null);
+//        menuToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                int id = item.getItemId();
+//
+//                switch (id)
+//                {
+//                    case R.id.cartShopping:
+//                        startActivity(new Intent(getContext(), CartActivity.class));
+//                        break;
+//                }
+//
+//                return false;
+//            }
+//        });
+
         expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
             @Override
             public void onGroupCollapse(int groupPosition) {
@@ -60,6 +83,8 @@ public class MenuFragment extends Fragment {
                 Bundle result = new Bundle();
                 result.putString("nhomloai", expandableListTitle.get(groupPosition));
                 getParentFragmentManager().setFragmentResult("NHOMLOAI", result);
+
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -76,6 +101,8 @@ public class MenuFragment extends Fragment {
                 Bundle result = new Bundle();
                 result.putString("loai", expandableListDetail.get(expandableListTitle.get(groupPosition)).get(childPosition));
                 getParentFragmentManager().setFragmentResult("LOAI", result);
+
+                bottomNavigationView.getMenu().getItem(1).setChecked(true);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

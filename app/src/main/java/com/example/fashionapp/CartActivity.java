@@ -52,7 +52,7 @@ public class CartActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CartActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -107,56 +107,62 @@ public class CartActivity extends AppCompatActivity {
         paymentCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i =0; i<productArrayList.size(); i++){
-                    cartProduct product = new cartProduct(productArrayList.get(i));
-                    String sizeCart = null;
-                    if(product.getSize().equals("Size S")){
-                        sizeCart = "sizeS";
-                    }else if(product.getSize().equals("Size M")){
-                        sizeCart = "sizeM";
-                    }else if(product.getSize().equals("Size L")){
-                        sizeCart = "sizeL";
-                    }else if(product.getSize().equals("Size XL")){
-                        sizeCart = "sizeXL";
-                    }
-                    String finalSizeCart = sizeCart;
-
+//                for(int i =0; i<productArrayList.size(); i++){
+//                    cartProduct product = new cartProduct(productArrayList.get(i));
+//                    String sizeCart = null;
+//                    if(product.getSize().equals("Size S")){
+//                        sizeCart = "sizeS";
+//                    }else if(product.getSize().equals("Size M")){
+//                        sizeCart = "sizeM";
+//                    }else if(product.getSize().equals("Size L")){
+//                        sizeCart = "sizeL";
+//                    }else if(product.getSize().equals("Size XL")){
+//                        sizeCart = "sizeXL";
+//                    }
+//                    String finalSizeCart = sizeCart;
+//
 //                    ArrayList<Integer> listSize = new ArrayList<>();
 //                    Intent intent = getIntent();
 //                    String temp = intent.getStringExtra("quantity");
 //                    int size = Integer.parseInt(temp);
 //                    listSize.add(size);
 
+                    startActivity(new Intent(CartActivity.this, PaymentActivity.class));
 
-
-                    mData.child(product.getName()).child("Màu").child(product.getColor()).child(finalSizeCart).addValueEventListener(new ValueEventListener() {
-                        boolean flag = false;
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            int temp = snapshot.getValue(Integer.class);
-
-                            if(product.getQuantity()>temp){
-                                Toast.makeText(getApplicationContext(),"Số lượng sản phẩm của cửa hàng không đủ", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            else{
-                                if(!flag){
-                                    int newsize = temp - product.getQuantity();
-                                    mData.child(product.getName()).child("Màu").child(product.getColor()).child(finalSizeCart).setValue(newsize);
-                                    database.deleteOneRow(product.getId());
-                                    productArrayList = database.readALLData();
-                                    customCartGridviewAdapter = new custom_cart_gridview_adapter(getApplicationContext(), productArrayList);
-                                    cart_list.setAdapter(customCartGridviewAdapter);
-                                    flag = true;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+//                    mData.child(product.getName()).child("Màu").child(product.getColor())
+//                            .child(finalSizeCart).addValueEventListener(new ValueEventListener() {
+//                        boolean flag = false;
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            int temp = snapshot.getValue(Integer.class);
+//
+//                            if(product.getQuantity()>temp){
+//                                Toast.makeText(getApplicationContext()
+//                                        ,"The quantity of product is not enough"
+//                                        , Toast.LENGTH_SHORT).show();
+//                                return;
+//                            }
+//                            else{
+//                                if(!flag){
+//                                    int newSize = temp - product.getQuantity();
+//                                    mData.child(product.getName()).child("Màu")
+//                                            .child(product.getColor())
+//                                            .child(finalSizeCart).setValue(newSize);
+//                                    database.deleteOneRow(product.getId());
+//                                    productArrayList = database.readALLData();
+//                                    customCartGridviewAdapter = new custom_cart_gridview_adapter
+//                                            (getApplicationContext(), productArrayList);
+//                                    cart_list.setAdapter(customCartGridviewAdapter);
+//                                    flag = true;
+//                                }
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
 
 //                    if(product.getQuantity()>listSize.get(i)){
 //                        Toast.makeText(getApplicationContext(),"Số lượng sản phẩm của cửa hàng không đủ", Toast.LENGTH_SHORT).show();
@@ -166,11 +172,11 @@ public class CartActivity extends AppCompatActivity {
 //                        int newsize = listSize.get(i) - product.getQuantity();
 //                        mData.child(product.getName()).child("Màu").child(product.getColor()).child(finalSizeCart).setValue(newsize);
 //                    }
-                }
+//                }
 //                database.deleteAll();
-                Toast.makeText(getApplicationContext(),"Thanh toán thành công!", Toast.LENGTH_SHORT).show();
-                cart_list.setVisibility(View.INVISIBLE);
-                cart_textview.setVisibility(View.VISIBLE);
+//                Toast.makeText(getApplicationContext(),"Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+//                cart_list.setVisibility(View.INVISIBLE);
+//                cart_textview.setVisibility(View.VISIBLE);
             }
         });
     }

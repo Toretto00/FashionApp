@@ -218,7 +218,6 @@ public class ShoppingFragment extends Fragment {
                 intent.putExtra("link", sp.getLinkImage());
                 intent.putExtra("price", sp.getPrice());
                 intent.putExtra("describe", sp.getDescribe());
-
                 startActivity(intent);
 
 //                startActivity(new Intent(getContext(), ShowDetailActivity.class));
@@ -240,16 +239,6 @@ public class ShoppingFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 ShoppingFragment.this.customGridviewAdapter.getFilter().filter(newText);
                 gridView.setAdapter(customGridviewAdapter);
-                return false;
-            }
-        });
-
-        MenuItem cart = menu.findItem(R.id.cartShopping);
-        cart.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(getActivity(), CartActivity.class);
-                startActivity(intent);
                 return false;
             }
         });

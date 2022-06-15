@@ -2,4 +2,178 @@
     <string name="app_name">FashionApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="array_vietnam_province">
+        <item>* Select province/city</item>
+        <item>An Giang</item>
+        <item>Bà Rịa - Vũng Tàu</item>
+        <item>Bắc Giang</item>
+        <item>Bắc Kạn</item>
+        <item>Bạc Liêu</item>
+        <item>Bắc Ninh</item>
+        <item>Bến Tre</item>
+        <item>Bình Định</item>
+        <item>Bình Dương</item>
+        <item>Bình Phước</item>
+        <item>Bình Thuận</item>
+        <item>Cà Mau</item>
+        <item>Cần Thơ</item>
+        <item>Cao Bằng</item>
+        <item>Đà Nẵng</item>
+        <item>Đắk Lắk</item>
+        <item>Đắk Nông</item>
+        <item>Điện Biên</item>
+        <item>Đồng Nai</item>
+        <item>Đồng Tháp</item>
+        <item>Gia Lai</item>
+        <item>Hà Giang</item>
+        <item>Hà Nam</item>
+        <item>Hà Nội</item>
+        <item>Hà Tĩnh</item>
+        <item>Hải Dương</item>
+        <item>Hải Phòng</item>
+        <item>Hậu Giang</item>
+        <item>Hòa Bình</item>
+        <item>Hưng Yên</item>
+        <item>Khánh Hòa</item>
+        <item>Kiên Giang</item>
+        <item>Kon Tum</item>
+        <item>Lai Châu</item>
+        <item>Lâm Đồng</item>
+        <item>Lạng Sơn</item>
+        <item>Lào Cai</item>
+        <item>Long An</item>
+        <item>Nam Định</item>
+        <item>Nghệ An</item>
+        <item>Ninh Bình</item>
+        <item>Ninh Thuận</item>
+        <item>Phú Thọ</item>
+        <item>Phú Yên</item>
+        <item>Quảng Bình</item>
+        <item>Quảng Nam</item>
+        <item>Quảng Ngãi</item>
+        <item>Quảng Ninh</item>
+        <item>Quảng Trị</item>
+        <item>Sóc Trăng</item>
+        <item>Sơn La</item>
+        <item>Tây Ninh</item>
+        <item>Thái Bình</item>
+        <item>Thái Nguyên</item>
+        <item>Thanh Hóa</item>
+        <item>Thừa Thiên Huế</item>
+        <item>Tiền Giang</item>
+        <item>Thành phố Hồ Chí Minh</item>
+        <item>Trà Vinh</item>
+        <item>Tuyên Quang</item>
+        <item>Vĩnh Long</item>
+        <item>Vĩnh Phúc</item>
+        <item>Yên Bái</item>
+    </string-array>
+
+    <string-array name="array_default_districts">
+        <item>* Select district</item>
+    </string-array>
+
+    <string-array name="array_hanoi_districts">
+        <item>* Select district</item>
+        <item>Quận Ba Đình</item>
+        <item>Quận Bắc Từ Liêm</item>
+        <item>Quận Cầu Giấy</item>
+        <item>Quận Đống Đa</item>
+        <item>Quận Hà Đông</item>
+        <item>Quận Hai Bà Trưng</item>
+        <item>Quận Hoàn Kiếm</item>
+        <item>Quận Hoàng Mai</item>
+        <item>Quận Long Biên</item>
+        <item>Quận Nam Từ Liêm</item>
+        <item>Quận Tây Hồ</item>
+        <item>Quận Thanh Xuân</item>
+        <item>Thị xã Sơn Tây</item>
+        <item>Huyện Ba Vì</item>
+        <item>Huyện Chương Mỹ</item>
+        <item>Huyện Đan Phượng</item>
+        <item>Huyện Đông Anh</item>
+        <item>Huyện Gia Lâm</item>
+        <item>Huyện Hoài Đức</item>
+        <item>Huyện Mê Linh</item>
+        <item>Huyện Mỹ Đức</item>
+        <item>Huyện Phú Xuyên</item>
+        <item>Huyện Phúc Thọ</item>
+        <item>Huyện Quốc Oai</item>
+        <item>Huyện Sóc Sơn</item>
+        <item>Huyện Thạch Thất</item>
+        <item>Huyện Thanh Oai</item>
+        <item>Huyện Thanh Trì</item>
+        <item>Huyện Thường Tín</item>
+        <item>Huyện Ứng Hòa</item>
+    </string-array>
+
+    <string-array name="array_hoChiMinh_districts">
+        <item>* Select district</item>
+        <item>Thành phố Thủ Đức</item>
+        <item>Quận 1</item>
+        <item>Quận 3</item>
+        <item>Quận 4</item>
+        <item>Quận 5</item>
+        <item>Quận 6</item>
+        <item>Quận 7</item>
+        <item>Quận 8</item>
+        <item>Quận 10</item>
+        <item>Quận 11</item>
+        <item>Quận 12</item>
+        <item>Quận Bình Tân</item>
+        <item>Quận Bình Thạnh</item>
+        <item>Quận Gò Vấp</item>
+        <item>Quận Phú Nhuận</item>
+        <item>Quận Tân Bình</item>
+        <item>Quận Tân Phú</item>
+        <item>Huyện Bình Chánh</item>
+        <item>Huyện Cần Giờ</item>
+        <item>Huyện Củ Chi</item>
+        <item>Huyện Hóc Môn</item>
+        <item>Huyện Nhà Bè</item>
+    </string-array>
+
+    <string-array name="array_tpthuduc_ward">-->
+            <item>* Select ward</item>
+            <item>Phường An Khánh</item>
+            <item>Phường An Lợi Đông</item>
+            <item>Phường An Phú</item>
+            <item>Phường Bình Chiểu</item>
+            <item>Phường Bình Thọ</item>
+            <item>Phường Bình Trưng Đông</item>
+            <item>Phường Bình Trưng Tây</item>
+            <item>Phường Cát Lái</item>
+            <item>Phường Hiệp Bình Chánh</item>
+            <item>Phường Hiệp Bình Phước</item>
+            <item>Phường Hiệp Phú</item>
+            <item>Phường Linh Chiểu</item>
+            <item>Phường Linh Đông</item>
+            <item>Phường Linh Tây</item>
+            <item>Phường Linh Trung</item>
+            <item>Phường Linh Xuân</item>
+            <item>Phường Long Bình</item>
+            <item>Phường Long Phước</item>
+            <item>Phường Long Thạnh Mỹ</item>
+            <item>Phường Long Trường</item>
+            <item>Phường Phú Hữu</item>
+            <item>Phường Phước Bình</item>
+            <item>Phường Phước Long A</item>
+            <item>Phường Phước Long B</item>
+            <item>Phường Tam Bình</item>
+            <item>Phường Tam Phú</item>
+            <item>Phường Tân Phú</item>
+            <item>Phường Tăng Nhơn Phú A</item>
+            <item>Phường Tăng Nhơn Phú B</item>
+            <item>Phường Thạnh Mỹ Lợi</item>
+            <item>Phường Thảo Điền</item>
+            <item>Phường Thủ Thiêm</item>
+            <item>Phường Trường Thạnh</item>
+            <item>Phường Trường Thọ</item>
+        </string-array>
+
+        <string-array name="array_default_ward">
+            <item>* Select ward</item>
+        </string-array>
+
 </resources>
