@@ -16,6 +16,15 @@
         android:clickable="true"
         >
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_black"
+            android:layout_gravity="center"
+            android:scaleY="3"
+            android:scaleX="3"
+            />
+
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
@@ -57,7 +66,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Với thông điệp Refined Life, Eaktion mong muốn đem đến cho khách hàng một lối sống tinh gọn bằng các sản phẩm thời trang tinh tế."
+                    android:text="Với thông điệp Refined Life, Dramasic mong muốn đem đến cho khách hàng một lối sống tinh gọn bằng các sản phẩm thời trang tinh tế."
                     android:textSize="16dp"
                     android:textStyle="italic"
                     android:layout_marginTop="5dp"
@@ -135,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
-                        android:text="Email: eaktion@gmail.com"/>
+                        android:text="Email: dramasic@gmail.com"/>
 
                     <TextView
                         android:layout_width="wrap_content"

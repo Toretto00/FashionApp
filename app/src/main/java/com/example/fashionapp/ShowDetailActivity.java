@@ -88,17 +88,17 @@ public class ShowDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(productInsertSize.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Bạn chưa nhập số lượng mua. Vui lòng nhập!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please enter a quantity!", Toast.LENGTH_SHORT).show();
                 }
                 else if(productSizeS.isChecked() == false && productSizeM.isChecked() == false && productSizeL.isChecked() == false && productSizeXL.isChecked() == false){
-                    Toast.makeText(getApplicationContext(), "Vui lòng chọn size cho sản phẩm.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please choose the size!", Toast.LENGTH_SHORT).show();
                 }
                 else if(Integer.parseInt(productInsertSize.getText().toString().trim()) > Integer.parseInt(productQuantityDetail.getText().toString().trim())){
-                    Toast.makeText(getApplicationContext(), "Số lượng sản phẩm không đủ!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "The product's quantity is not enough.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     addProductToCart();
-//                    byExtras();
+                    finish();
                 }
             }
         });
@@ -224,11 +224,5 @@ public class ShowDetailActivity extends AppCompatActivity {
             }
             database.addData(name, color, size, quantity, price, linkImage);
         }
-    }
-
-    public void byExtras(){
-        Intent intent = new Intent(ShowDetailActivity.this, CartActivity.class);
-        intent.putExtra("quantity",productQuantityDetail.getText().toString());
-        startActivity(intent);
     }
 }
