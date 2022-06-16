@@ -87,7 +87,7 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    private TextView register;
+    private TextView register, forgotPassword;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -100,6 +100,7 @@ public class LoginFragment extends Fragment {
         passwordLogin = (EditText) view.findViewById(R.id.passwordLogin);
         register = (TextView) view.findViewById(R.id.register);
         googleSign = (ImageButton) view.findViewById(R.id.googleSign);
+        forgotPassword = view.findViewById(R.id.forgotPassword);
 
         if(auth.getCurrentUser() != null){
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -110,6 +111,17 @@ public class LoginFragment extends Fragment {
             fragmentTransaction.commit();
         }
 
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.contentContainer, new ForgorPasswordFragment(), null);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
