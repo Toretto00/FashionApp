@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,7 +34,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,9 +48,10 @@ public class ProfileFragment extends Fragment {
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
     ArrayAdapter<CharSequence> genderAdapter;
     Spinner genderProfile;
-    TextView birthdayProfile;
-    EditText fullNameProfile, emailProfile, phoneProfile, addressProfile;
+    TextView birthdayProfile, emailProfile;
+    EditText fullNameProfile, phoneProfile, addressProfile;
     Button updateProfileBtn;
+    String userID;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -129,7 +137,9 @@ public class ProfileFragment extends Fragment {
                             phoneProfile.setText(snapshot.getString("phone"));
                             addressProfile.setText(snapshot.getString("address"));
                             birthdayProfile.setText(snapshot.getString("birthday"));
-
+                            genderProfile.setSelection(getIndex(genderProfile,
+                                    snapshot.getString("gender").toString()));
+                            userID = snapshot.getId();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -142,9 +152,51 @@ public class ProfileFragment extends Fragment {
         updateProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        
+//                Map<String, Object> map = new HashMap<>();
+//                map.put("name", fullNameProfile.getText());
+//                map.put("phone", phoneProfile.getText());
+//                map.put("gender", genderProfile.getSelectedItem());
+//                map.put("address", addressProfile.getText());
+//                map.put("birthday", birthdayProfile.getText());
+
+                fStore.collection("Users")
+                        .document(userID)
+                        .update(
+                                "name", fullNameProfile.getText().toString(),
+                "phone", phoneProfile.getText().toString(),
+                                    "gender", genderProfile.getSelectedItem().toString(),
+                                    "address", addressProfile.getText().toString(),
+                                    "birthday", birthdayProfile.getText().toString()
+                        )
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(getContext(), "Updated", Toast.LENGTH_SHORT).show();
+
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                fragmentTransaction.replace(R.id.contentContainer, new AccountDetailFragment(), null);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
+    }
+
+    private int getIndex(Spinner spinner, String s){
+        for (int i=0; i<spinner.getCount(); i++){
+            if(spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s))
+                return i;
+        }
+        return 0;
     }
 
     private void initDatePicker1() {

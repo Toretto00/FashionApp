@@ -168,7 +168,8 @@
                 android:layout_height="75dp"
                 android:background="@drawable/layout_blur_white"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/settingProfileBtn">
 
                 <ImageView
                     android:layout_width="45dp"
