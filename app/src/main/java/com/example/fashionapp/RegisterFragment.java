@@ -7,9 +7,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ public class RegisterFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseDatabase database;
     FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+    ArrayAdapter<CharSequence> genderAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,10 +98,11 @@ public class RegisterFragment extends Fragment {
     }
 
     private EditText emailRegister, passwordRegister, confirmPasswordRegister, nameRegister,
-            phoneRegister, genderRegister, addressRegister;
+            phoneRegister, addressRegister;
     private Button registerBtn;
     private TextView login, birthdayRegister;
     private  DatePickerDialog datePickerDialog;
+    private Spinner genderRegister;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -106,6 +110,12 @@ public class RegisterFragment extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        genderAdapter = ArrayAdapter.createFromResource(getContext(), R.array.gender_array,
+                R.layout.spinner_layout);
+
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
 
         login = (TextView) view.findViewById(R.id.login);
 
@@ -131,6 +141,7 @@ public class RegisterFragment extends Fragment {
         genderRegister = view.findViewById(R.id.genderRegister);
         addressRegister = view.findViewById(R.id.addressRegister);
 
+        genderRegister.setAdapter(genderAdapter);
 
         registerBtn = view.findViewById(R.id.registerBtn);
         registerBtn.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +182,7 @@ public class RegisterFragment extends Fragment {
         String password = passwordRegister.getText().toString();
         String confirmPassword = confirmPasswordRegister.getText().toString();
         String birthday = birthdayRegister.getText().toString();
-        String gender = genderRegister.getText().toString();
+        String gender = genderRegister.getSelectedItem().toString();
         String address = addressRegister.getText().toString();
         String phone = phoneRegister.getText().toString();
 
@@ -211,6 +222,13 @@ public class RegisterFragment extends Fragment {
 
                             Toast.makeText(getContext(), "Registration successful!",
                                     Toast.LENGTH_SHORT).show();
+
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                            fragmentTransaction.replace(R.id.contentContainer, new LoginFragment(), null);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
                         }else{
                             Toast.makeText(getContext(), "Error: "+task.getException(),
                                     Toast.LENGTH_SHORT).show();
@@ -225,7 +243,7 @@ public class RegisterFragment extends Fragment {
         map.put("phone", phoneRegister.getText().toString());
         map.put("email", emailRegister.getText().toString());
         map.put("password", passwordRegister.getText().toString());
-        map.put("gender", genderRegister.getText().toString());
+        map.put("gender", genderRegister.getSelectedItem().toString());
         map.put("birthday", birthdayRegister.getText().toString());
         map.put("address", addressRegister.getText().toString());
 
@@ -237,6 +255,14 @@ public class RegisterFragment extends Fragment {
 
                     }
                 });
+    }
+
+    private int getIndex(Spinner spinner, String s){
+        for (int i=0; i<spinner.getCount(); i++){
+            if(spinner.getItemAtPosition(i).toString().equalsIgnoreCase(s))
+                return i;
+        }
+        return 0;
     }
 
     private void initDatePicker1() {

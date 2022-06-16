@@ -109,19 +109,19 @@
                 android:paddingEnd="12dp"
                 android:gravity="center|left"/>
 
-            <EditText
+            <Spinner
                 android:id="@+id/genderRegister"
                 android:layout_width="280dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:textSize="18dp"
-                android:hint="Gender"
                 android:inputType="text"
                 android:drawableStart="@drawable/ic_gender"
                 android:drawablePadding="12dp"
                 android:background="@drawable/custom_edittext"
                 android:paddingStart="12dp"
-                android:paddingEnd="12dp"/>
+                android:paddingEnd="12dp"
+                android:gravity="center|left"/>
 
             <EditText
                 android:id="@+id/addressRegister"
